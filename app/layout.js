@@ -12,42 +12,51 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "This Day in History",
-  description: "Discover historical events that happened on your special day",
-  keywords: [
-    "This Day in History",
-    "historical events",
-    "on this day",
-    "events by date",
-    "historical facts",
-    "historical timeline",
-    "historical events by date",
-  ],
+  title: "Indian World Times - Latest News Updates and Current Affairs",
+  description: "Stay updated with the latest news and current affairs in India",
   authors: [
     {
       name: "Abhay Patel",
-      url: "https://www.dayinhistory.vercel.app",
+      url: "https://www.indianworldtimes.vercel.app",
     },
   ],
   creator: "Abhay Patel",
   publisher: "Abhay Patel",
+  keywords: [
+    "news",
+    "current affairs",
+    "latest news",
+    "Indian news",
+    "world news",
+    "politics",
+    "economy",
+    "indian world times"
+  ],
+  authors: [
+    {
+      name: "Abhay Patel",
+      url: "https://www.indianworldtimes.vercel.app",
+    },
+  ],
+  
   themeColor: "#1e3a8a",
   colorScheme: "dark",
   openGraph: {
-    title: "This Day in History",
-    description: "Discover historical events that happened on your special day",
-    url: "https://www.dayinhistory.vercel.app",
-    siteName: "This Day in History",
+    title: "Indian World Times - Latest News Updates and Current Affairs",
+    description: "Stay updated with the latest news and current affairs in India",
+    url: "https://www.indianworldtimes.vercel.app",
+    siteName: "Indian World Times",
     images: [
       {
         url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Nehru%2C_Gandhi_and_Patel_AICC_1946.jpg/1280px-Nehru%2C_Gandhi_and_Patel_AICC_1946.jpg",
         width: 1200,
         height: 630,
-        alt: "This Day in History",
+        alt: "Indian World Times",
       },
     ],
     type: "website",
     locale: "en_US",
+    
   },
 };
 

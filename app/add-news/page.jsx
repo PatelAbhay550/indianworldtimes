@@ -18,6 +18,17 @@ import {
 const categories = [
   { id: 'general', name: 'General' },
   { id: 'business', name: 'Business' },
+  {id:'war', name: 'War'},
+  { id: 'world', name: 'World' },
+  { id: 'politics', name: 'Politics' },
+  { id: 'local', name: 'Local' },
+  { id: 'national', name: 'National' },
+  { id: 'international', name: 'International' },
+  { id: 'opinion', name: 'Opinion' },
+  { id: 'lifestyle', name: 'Lifestyle' },
+  { id: 'travel', name: 'Travel' },
+  { id: 'food', name: 'Food' },
+  { id: 'fashion', name: 'Fashion' },
   { id: 'entertainment', name: 'Entertainment' },
   { id: 'health', name: 'Health' },
   { id: 'science', name: 'Science' },
@@ -35,6 +46,7 @@ export default function AddNewsPage() {
     category: 'general',
     imageUrl: '',
     source: '',
+    slug: '',
     publishedAt: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -235,6 +247,7 @@ export default function AddNewsPage() {
                   <FaBuilding className="mr-2 text-red-600" />
                   Source
                 </label>
+                
                 <input
                   type="text"
                   name="source"
@@ -242,6 +255,21 @@ export default function AddNewsPage() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
                   placeholder="News organization"
+                />
+              </div>
+              {/* Slug */}
+              <div>
+                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                  <FaLink className="mr-2 text-red-600" />
+                  Slug
+                </label>
+                <input
+                  type="text"
+                  name="slug"
+                  value={formData.slug}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                  placeholder="news/article-title"
                 />
               </div>
 
