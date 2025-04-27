@@ -8,9 +8,40 @@ import {
   FaShareAlt, 
   FaBookmark 
 } from 'react-icons/fa';
+export async function generateMetadata({ params }) {
+  // read route params
+  const { slug } = await params;
+ 
+  // fetch data
+  // Query Firestore for article matching slug
+  const q = query(
+    collection(db, 'news'),
+    where('slug', '==', slug)
+  );
+  const querySnapshot = await getDocs(q);
+  const article = {
+    id: querySnapshot.docs[0].id,
+    ...querySnapshot.docs[0].data(),
+  };
+ 
+  return {
+    title: article.title || 'News Article',
+    description: article.summary || 'Read the latest news article.',
+    keywords: article.keywords || 'news, article, latest',
+    authors: article.author || 'Indian World Times',
+    openGraph: {
+      title: article.title || 'News Article',
+      description: article.summary || 'Read the latest news article.',
+      images: [article.imageUrl || 'https://example.com/default-image.jpg'],
+      url: `https://indianworldtimes.com/news/${slug}`,
+
+    },
+  }
+}
+ 
 
 export default async function NewsArticle({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // Query Firestore for article matching slug
   const q = query(

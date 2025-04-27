@@ -47,6 +47,8 @@ export default function AddNewsPage() {
     imageUrl: '',
     source: '',
     slug: '',
+    
+    keywords: [],
     publishedAt: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -185,7 +187,20 @@ export default function AddNewsPage() {
                 required
               />
             </div>
-
+{/*tags*/}
+            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                Tags (comma separated)
+              </label>
+              <input
+                type="text"
+                name="keywords"
+                value={formData.keywords.join(', ')}
+                onChange={(e) => setFormData({ ...formData, keywords: e.target.value.split(',').map(tag => tag.trim()) })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                placeholder="Enter tags separated by commas"  
+                />
+            </div>
             {/* Content Field */}
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
               <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">

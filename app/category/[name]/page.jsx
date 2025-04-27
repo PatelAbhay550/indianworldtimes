@@ -8,6 +8,25 @@ import {
   FaBookmark
 } from 'react-icons/fa';
 import Link from 'next/link';
+export async function generateMetadata({ params }) {
+  const category = await params.name;
+  return{
+    title: `Latest News and Updates in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+    description: `Latest ${category.charAt(0).toUpperCase() + category.slice(1)} news articles. Read Now`,
+    openGraph: {
+      title: `Latest News and Updates in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+      description: `Latest ${category.charAt(0).toUpperCase() + category.slice(1)} news articles. Read now`,
+      images: ['https://akm-img-a-in.tosshub.com/indiatoday/images/story/201707/nehru_patel_0647_070717071248.jpg?size=690:388'],
+    },
+
+
+
+
+
+
+
+  }
+}
 
 const formatCategoryName = (cat) => {
   return cat.charAt(0).toUpperCase() + cat.slice(1);
@@ -107,7 +126,7 @@ const CategoryPage = async ({ params }) => {
                     <span>{formatDate(news[0].publishedAt)}</span>
                   </div>
                   <Link 
-                    href={`/news/${news[0].id}`}
+                    href={`/news/${news[0].slug}`}
                     className="mt-4 inline-flex items-center text-red-600 font-medium hover:underline"
                   >
                     Read Full Story →
@@ -159,7 +178,7 @@ const CategoryPage = async ({ params }) => {
                         <span>{formatDate(article.publishedAt)}</span>
                       </div>
                       <Link 
-                        href={`/news/${article.id}`}
+                        href={`/news/${article.slug}`}
                         className="text-red-600 hover:underline flex items-center"
                       >
                         Read More
