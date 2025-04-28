@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `Latest News and Updates in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
       description: `Latest ${category.charAt(0).toUpperCase() + category.slice(1)} news articles. Read now`,
-      images: ['https://akm-img-a-in.tosshub.com/indiatoday/images/story/201707/nehru_patel_0647_070717071248.jpg?size=690:388'],
+      images: [`https://placehold.co/600x400?text=${encodeURIComponent(`${category.charAt(0).toUpperCase() + category.slice(1)}+Category+News+Indian+World+Times`)}`],
     },
 
 
