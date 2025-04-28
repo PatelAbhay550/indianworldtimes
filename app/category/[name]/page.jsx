@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `Latest News and Updates in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
       description: `Latest ${category.charAt(0).toUpperCase() + category.slice(1)} news articles. Read now`,
-      images: [`https://placehold.co/600x400?text=${encodeURIComponent(`${category.charAt(0).toUpperCase() + category.slice(1)}+Category+News+Indian+World+Times`)}`],
+      images: [`https://placehold.co/600x400?text=${encodeURIComponent(`${category.charAt(0).toUpperCase() + category.slice(1)} Category - News Indian World Times`)}`],
       url: `https://indianworldnews.com/category/${encodeURIComponent(category)}`,
     },
   };
