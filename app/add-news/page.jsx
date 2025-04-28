@@ -14,28 +14,9 @@ import {
   FaArrowLeft,
   FaSave
 } from 'react-icons/fa';
+import { Categories } from '@/lib/categories';
 
-const categories = [
-  { id: 'general', name: 'General' },
-  { id: 'business', name: 'Business' },
-  {id:'war', name: 'War'},
-  { id: 'world', name: 'World' },
-  { id: 'politics', name: 'Politics' },
-  { id: 'local', name: 'Local' },
-  { id: 'national', name: 'National' },
-  { id: 'international', name: 'International' },
-  { id: 'opinion', name: 'Opinion' },
-  { id: 'lifestyle', name: 'Lifestyle' },
-  { id: 'travel', name: 'Travel' },
-  { id: 'food', name: 'Food' },
-  { id: 'fashion', name: 'Fashion' },
-  { id: 'entertainment', name: 'Entertainment' },
-  { id: 'health', name: 'Health' },
-  { id: 'science', name: 'Science' },
-  { id: 'sports', name: 'Sports' },
-  { id: 'technology', name: 'Technology' }
-];
-
+const categories = Categories
 export default function AddNewsPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
