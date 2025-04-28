@@ -11,6 +11,7 @@ import Link from 'next/link';
 import TopbarHome from '@/components/TopbarHome';
 import FeaturedNews from '@/components/FeaturedNews';
 import NewsBox from '@/components/NewsBox';
+import Footersmall from '@/components/Footersmall';
 export async function generateMetadata({ params }) {
   const category = await params.name;
   return {
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `Latest News and Updates in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
       description: `Latest ${category.charAt(0).toUpperCase() + category.slice(1)} news articles. Read now`,
-      images: [`https://placehold.co/600x400?text=${encodeURIComponent(`${category.charAt(0).toUpperCase() + category.slice(1)} Category - News Indian World Times`)}`],
+      images: [`https://placehold.co/600x400?text=${encodeURIComponent(`${category.charAt(0).toUpperCase() + category.slice(1)}+Category+News+Indian+World+Times`)}`],
       url: `https://indianworldnews.com/category/${encodeURIComponent(category)}`,
     },
   };
@@ -81,13 +82,7 @@ const CategoryPage = async ({ params }) => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black text-white py-8 px-4">
-        <div className="container mx-auto">
-          <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400 text-sm">
-            <p>© {new Date().getFullYear()} Indian World Times. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footersmall />
     </div>
   );
 };
