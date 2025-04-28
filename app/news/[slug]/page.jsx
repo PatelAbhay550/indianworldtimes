@@ -75,11 +75,9 @@ export default async function NewsArticle({ params }) {
     ...querySnapshot.docs[0].data(),
   };
 
-  const formatDate = (timestamp) => {
-    if (!timestamp?.toDate) return 'Date not available';
-    const date = timestamp.toDate();
+  const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-IN', options);
+    return new Date(dateString).toLocaleDateString('en-IN', options);
   };
 
   return (
