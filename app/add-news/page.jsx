@@ -21,16 +21,17 @@ export default function AddNewsPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
-    summary: '',
+    desc: '',
     content: '<p></p>',
     author: '',
     category: 'general',
-    imageUrl: '',
+    coverimage: '',
     source: '',
     slug: '',
     
-    keywords: [],
-    publishedAt: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+    tags: [],
+    timestamp: new Date().toISOString()
+  
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -55,13 +56,13 @@ export default function AddNewsPage() {
         throw new Error('Title, summary, and content are required');
       }
 
-      await addDoc(collection(db, 'news'), {
+      await addDoc(collection(db, 'allblogs'), {
         ...formData,
         publishedAt: new Date(formData.publishedAt).toISOString()
       });
 
       setSuccess('News article added successfully!');
-      setTimeout(() => router.push('/'), 2000);
+      setTimeout(() => router.push('/add-news'), 2000);
     } catch (err) {
       console.error('Error adding news:', err);
       setError(err.message || 'Failed to add news article');
