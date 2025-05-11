@@ -16,14 +16,33 @@ import {
 } from 'react-icons/fa';
 import { Categories } from '@/lib/categories';
 
-const categories = Categories
+const categories = [
+  { id: 'general', name: 'General' },
+  { id: 'ipl2025', name: 'IPL 2025' },
+  { id: 'playerprofile', name: 'Player Profile' },
+  { id: 'records', name: 'Records' },
+  { id: 'viratkohli', name: 'Virat Kohli' },
+  { id: 'squad', name: 'Squad' },
+  { id: 'national', name: 'National' },
+  { id: 'international', name: 'International' },
+  { id: 'opinion', name: 'Opinion' },
+  { id: 'lifestyle', name: 'Lifestyle' },
+  { id: 'travel', name: 'Travel' },
+  { id: 'food', name: 'Food' },
+  { id: 'fashion', name: 'Fashion' },
+  { id: 'entertainment', name: 'Entertainment' },
+  { id: 'health', name: 'Health' },
+  { id: 'science', name: 'Science' },
+  { id: 'sports', name: 'Sports' },
+  { id: 'technology', name: 'Technology' }
+];
 export default function AddNewsPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
     content: '<p></p>',
-    author: '',
+    author: 'Abhay Raj Patel',
     category: 'general',
     coverimage: '',
     source: '',
@@ -135,7 +154,7 @@ export default function AddNewsPage() {
                 <input
                   type="url"
                   name="imageUrl"
-                  value={formData.imageUrl}
+                  value={formData.coverimage}
                   onChange={handleChange}
                   className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 dark:border-gray-600 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700"
                   placeholder="https://example.com/image.jpg"
@@ -161,7 +180,7 @@ export default function AddNewsPage() {
               </label>
               <textarea
                 name="summary"
-                value={formData.summary}
+                value={formData.desc}
                 onChange={handleChange}
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
@@ -177,7 +196,7 @@ export default function AddNewsPage() {
               <input
                 type="text"
                 name="keywords"
-                value={formData.keywords.join(', ')}
+                value={formData.tags.join(', ')}
                 onChange={(e) => setFormData({ ...formData, keywords: e.target.value.split(',').map(tag => tag.trim()) })}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
                 placeholder="Enter tags separated by commas"  
