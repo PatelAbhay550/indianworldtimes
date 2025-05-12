@@ -3,18 +3,10 @@ import { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
-import { 
-  FaNewspaper,
-  FaImage,
-  FaUserEdit,
-  FaTag,
-  FaLink,
-  FaBuilding,
-  FaCalendarAlt,
-  FaArrowLeft,
-  FaSave
+import {
+  FaNewspaper, FaImage, FaUserEdit, FaTag, FaLink,
+  FaBuilding, FaCalendarAlt, FaArrowLeft, FaSave
 } from 'react-icons/fa';
-import { Categories } from '@/lib/categories';
 
 const categories = [
   { id: 'general', name: 'General' },
@@ -36,6 +28,7 @@ const categories = [
   { id: 'sports', name: 'Sports' },
   { id: 'technology', name: 'Technology' }
 ];
+
 export default function AddNewsPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -47,11 +40,11 @@ export default function AddNewsPage() {
     coverimage: '',
     source: '',
     slug: '',
-    
     tags: [],
+    publishedAt: new Date().toISOString().split('T')[0], // YYYY-MM-DD
     timestamp: new Date().toISOString()
-  
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -71,7 +64,7 @@ export default function AddNewsPage() {
     setSuccess('');
 
     try {
-      if (!formData.title || !formData.summary || !formData.content) {
+      if (!formData.title || !formData.desc || !formData.content) {
         throw new Error('Title, summary, and content are required');
       }
 
@@ -92,10 +85,9 @@ export default function AddNewsPage() {
 
   return (
     <div className="min-h-screen dark:bg-gray-900 dark:text-white">
-      {/* Header matching your main page */}
       <header className="border-b border-gray-200 dark:border-gray-700 py-4 px-4 md:px-8">
         <div className="flex justify-between items-center">
-          <button 
+          <button
             onClick={() => router.back()}
             className="flex items-center text-red-600 hover:text-red-700"
           >
@@ -106,7 +98,7 @@ export default function AddNewsPage() {
             <FaNewspaper className="mr-2" />
             Add News Article
           </h1>
-          <div className="w-8"></div> {/* Spacer for alignment */}
+          <div className="w-8"></div>
         </div>
       </header>
 
@@ -117,7 +109,7 @@ export default function AddNewsPage() {
               {error}
             </div>
           )}
-          
+
           {success && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
               {success}
@@ -125,104 +117,99 @@ export default function AddNewsPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title Field */}
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
-                Article Title
-              </label>
+            {/* Title */}
+            <div className="border-b pb-4">
+              <label className="block text-lg font-medium mb-2">Article Title</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                 placeholder="Enter news headline"
                 required
               />
             </div>
 
-            {/* Image URL Field */}
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <label className="flex items-center text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            {/* Image URL */}
+            <div className="border-b pb-4">
+              <label className="flex items-center text-lg font-medium mb-2">
                 <FaImage className="mr-2 text-red-600" />
                 Featured Image URL
               </label>
               <div className="flex">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center px-3 rounded-l-md border bg-gray-50 dark:bg-gray-700">
                   <FaLink />
                 </span>
                 <input
                   type="url"
-                  name="imageUrl"
+                  name="coverimage"
                   value={formData.coverimage}
                   onChange={handleChange}
-                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 dark:border-gray-600 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700"
+                  className="flex-1 px-3 py-2 rounded-r-md border dark:bg-gray-700"
                   placeholder="https://example.com/image.jpg"
                 />
               </div>
-              {formData.imageUrl && (
+              {formData.coverimage && (
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Image Preview:</p>
-                  <img 
-                    src={formData.imageUrl} 
-                    alt="Preview" 
-                    className="h-40 object-cover rounded border border-gray-200 dark:border-gray-600"
-                    onError={(e) => e.target.style.display = 'none'}
+                  <p className="text-sm mb-1">Image Preview:</p>
+                  <img
+                    src={formData.coverimage}
+                    alt="Preview"
+                    className="h-40 object-cover rounded border"
+                    onError={(e) => (e.target.style.display = 'none')}
                   />
                 </div>
               )}
             </div>
 
-            {/* Summary Field */}
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
-                Short Summary
-              </label>
+            {/* Summary */}
+            <div className="border-b pb-4">
+              <label className="block text-lg font-medium mb-2">Short Summary</label>
               <textarea
-                name="summary"
+                name="desc"
                 value={formData.desc}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                 placeholder="Brief summary that will appear in news listings"
                 required
               />
             </div>
-{/*tags*/}
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
-                Tags (comma separated)
-              </label>
+
+            {/* Tags */}
+            <div className="border-b pb-4">
+              <label className="block text-lg font-medium mb-2">Tags (comma separated)</label>
               <input
                 type="text"
-                name="keywords"
+                name="tags"
                 value={formData.tags.join(', ')}
-                onChange={(e) => setFormData({ ...formData, keywords: e.target.value.split(',').map(tag => tag.trim()) })}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
-                placeholder="Enter tags separated by commas"  
-                />
+                onChange={(e) =>
+                  setFormData({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()) })
+                }
+                className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
+                placeholder="Enter tags separated by commas"
+              />
             </div>
-            {/* Content Field */}
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <label className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
-                Full Content
-              </label>
+
+            {/* Content */}
+            <div className="border-b pb-4">
+              <label className="block text-lg font-medium mb-2">Full Content</label>
               <textarea
                 name="content"
                 value={formData.content}
                 onChange={handleChange}
                 rows={8}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 font-mono"
-                placeholder="<p>Enter the full article content with HTML formatting</p>"
+                className="w-full px-4 py-2 border rounded-md font-mono dark:bg-gray-700"
+                placeholder="<p>Enter full article content in HTML</p>"
                 required
               />
             </div>
 
-            {/* Author, Category, Source, Date */}
+            {/* Metadata Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Author */}
               <div>
-                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                <label className="flex items-center mb-1">
                   <FaUserEdit className="mr-2 text-red-600" />
                   Author
                 </label>
@@ -231,14 +218,13 @@ export default function AddNewsPage() {
                   name="author"
                   value={formData.author}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
-                  placeholder="Reporter's name"
+                  className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
+                  placeholder="Author name"
                 />
               </div>
 
-              {/* Category */}
               <div>
-                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                <label className="flex items-center mb-1">
                   <FaTag className="mr-2 text-red-600" />
                   Category
                 </label>
@@ -246,8 +232,7 @@ export default function AddNewsPage() {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
-                  required
+                  className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                 >
                   {categories.map(cat => (
                     <option key={cat.id} value={cat.id}>
@@ -257,25 +242,23 @@ export default function AddNewsPage() {
                 </select>
               </div>
 
-              {/* Source */}
               <div>
-                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                <label className="flex items-center mb-1">
                   <FaBuilding className="mr-2 text-red-600" />
                   Source
                 </label>
-                
                 <input
                   type="text"
                   name="source"
                   value={formData.source}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                  className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                   placeholder="News organization"
                 />
               </div>
-              {/* Slug */}
+
               <div>
-                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                <label className="flex items-center mb-1">
                   <FaLink className="mr-2 text-red-600" />
                   Slug
                 </label>
@@ -284,14 +267,13 @@ export default function AddNewsPage() {
                   name="slug"
                   value={formData.slug}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                  className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                   placeholder="news/article-title"
                 />
               </div>
 
-              {/* Publish Date */}
               <div>
-                <label className="flex items-center text-gray-800 dark:text-gray-200 mb-1">
+                <label className="flex items-center mb-1">
                   <FaCalendarAlt className="mr-2 text-red-600" />
                   Publish Date
                 </label>
@@ -300,18 +282,20 @@ export default function AddNewsPage() {
                   name="publishedAt"
                   value={formData.publishedAt}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700"
+                  className="w-full px-4 py-2 border rounded-md dark:bg-gray-700"
                   required
                 />
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <div className="pt-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`flex items-center justify-center px-6 py-3 rounded-md text-white ${isSubmitting ? 'bg-red-400' : 'bg-red-600 hover:bg-red-700'} focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full md:w-auto`}
+                className={`flex items-center justify-center px-6 py-3 rounded-md text-white ${
+                  isSubmitting ? 'bg-red-400' : 'bg-red-600 hover:bg-red-700'
+                } focus:outline-none w-full md:w-auto`}
               >
                 <FaSave className="mr-2" />
                 {isSubmitting ? 'Publishing...' : 'Publish Article'}
@@ -322,4 +306,5 @@ export default function AddNewsPage() {
       </main>
     </div>
   );
-}
+    }
+    
